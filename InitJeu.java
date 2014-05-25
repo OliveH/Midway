@@ -1,4 +1,3 @@
-
 public class InitJeu {
 
 	public static void initialize() {
@@ -28,15 +27,14 @@ public class InitJeu {
 		String nomBato = "";
 		int nbAvions = -1;
 		Avion[] tabAvions = new Avion[4];// tableau d'avions pour un bateau
-		try {
-			while (nbPorteAvion <= 0 || nbPorteAvion > 4) {
+
+		while (nbPorteAvion <= 0 || nbPorteAvion > 4) {
+			try {
 				System.out.println("Combien de porte-avions (entre 1 et 4) ?");
 				nbPorteAvion = Terminal.lireInt();
+			} catch (TerminalException e) {
+				System.out.println("Entrez un nombre svp !!\n");
 			}
-		} catch (NegativeArraySizeException e) {
-			System.out.println("Merci d'entrer une valeur !!");
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 
 		Bateau[] tabPorteAvions = new Bateau[nbPorteAvion]; // tableau de
@@ -51,29 +49,41 @@ public class InitJeu {
 			do {
 				System.out.println("Nom du bateau ?");
 				nomBato = Terminal.lireString();
-			} while (nomBato == "");
+			} while (nomBato.equals(""));
 
 			do {
-				System.out.println("Coordonnée en X :");
-				coordX = Terminal.lireInt();
+				try {
+					System.out.println("Coordonnée en X :");
+					coordX = Terminal.lireInt();
+				} catch (TerminalException e) {
+					System.out.println("Entrez un nombre svp !!\n");
+				}
 			} while (coordX < 0 || coordX > init.length);
 
 			do {
-				System.out.println("Coordonnée en Y :");
-				coordY = Terminal.lireInt();
+				try {
+					System.out.println("Coordonnée en Y :");
+					coordY = Terminal.lireInt();
+				} catch (TerminalException e) {
+					System.out.println("Entrez un nombre svp !!\n");
+				}
 			} while (coordY < 0 || coordY > init.length);
 
 			if (init[coordX][coordY] == 1) {
 				System.out
-						.println("Un bateau sur la terre ? Non pris en compte !!");
+						.println("Un bateau sur la terre ? Bateau non pris en compte !!");
 				igpa.modifierCase(coordX, coordY, 1);
 			} else {
 				igpa.modifierCase(coordX, coordY, 20);
 				do {
-					System.out
-							.println("Nombre d'avions sur le porte-avions numéro "
-									+ i + " ? (entre 0 et 5)");
-					nbAvions = Terminal.lireInt();
+					try {
+						System.out
+								.println("Nombre d'avions sur le porte-avions numéro "
+										+ i + " ? (entre 0 et 5)");
+						nbAvions = Terminal.lireInt();
+					} catch (TerminalException e) {
+						System.out.println("Entrez un nombre svp !!\n");
+					}
 				} while (nbAvions < 0 || nbAvions > 5);
 				tabAvionsPorteAvion[i - 1] = nbAvions;// init chaque
 														// porte-avions avec 5
